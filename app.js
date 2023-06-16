@@ -1,3 +1,6 @@
+require('dotenv').config();
+require('express-async-errors');
+
 //App starters Import
 const express = require('express');
 const app = express();
@@ -31,7 +34,7 @@ const start = async () => {
         await db(process.env.MONGO_URI);
         app.listen(port, () => console.log(`Server listening on port ${port}...`));
     } catch (error) {
-        console.log("Couldn't start node js");
+        console.log(error.message);
     }
 }
 
