@@ -8,3 +8,5 @@ const db = async (uri) => {
         throw error
     }
 }
+
+module.exports = db;
