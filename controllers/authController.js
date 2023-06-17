@@ -26,6 +26,13 @@ const register = async (req, res) => {
     }
 
     const token = user.createJWT();
+
+    const oneDay = 1000 * 60 * 60 * 24;//1millisecond x 60sec x 60min x 24 hr
+
+    req.cookie('token', token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + oneDay)
+    });
     
     res.status(StatusCodes.CREATED).json({user, token});
 }
@@ -37,25 +44,25 @@ const login = async (req, res) => {
         throw new NotAcceptableError("Can't accept blank fields, provide an email and a password to login");
     }
 
-    const user = await User.find({email});
+    const user = await User.findOne({email});
 
     if(!user){
         throw new NotFoundError("The email that you have provide is not registered with us");
     }
 
-    const passwordIsCorrect = await user.comparePasswords(password);
+    const passwordIsCorrect = user.comparePasswords(password);
 
     if(!passwordIsCorrect){
-        throw new UnauthorizedError("Password is incorrect");
+        // throw new UnauthorizedError("Password is incorrect");
     }
 
     const token = user.createJWT();
 
-    res.status(StatusCodes.OK).json(user, token);
+    res.status(StatusCodes.OK).json({user, token});
 }
 
 const logout = async (req, res) => {
-    res.status(StatusCodes.OK).json("logged out");
+    res.json("logged out");
 }
 
 module.exports = {

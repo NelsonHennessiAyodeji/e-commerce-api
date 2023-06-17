@@ -8,6 +8,9 @@ const app = express();
 //Database connection Import
 const db = require('./database/connectDB');
 
+//Cookie Parser Import
+const cookieParser = require('cookie-parser');
+
 //Router Imports
 const authRouter = require('./routers/authRouter');
 
@@ -17,6 +20,7 @@ const errorHandler = require('./middleware/error-handler');
 
 //Invoking Middleware
 app.use(express.json());
+app.use(cookieParser());
 
 //Invoking Routers
 app.use('/api/v1', authRouter);
