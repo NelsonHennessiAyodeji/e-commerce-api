@@ -1,9 +1,11 @@
 const {
     createJWT,
-    verifyToken
+    verifyToken,
 } = require('./jwt');
+const attachCookiesToResponse = require('./cookie');
 
 module.exports = {
     createJWT,
-    verifyToken
+    verifyToken,
+    attachCookiesToResponse
 };

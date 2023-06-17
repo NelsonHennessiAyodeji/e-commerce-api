@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const { attachCookiesToResponse } = require('../utilities');
 const {
     BadRequestError,
     NotFoundError,
@@ -9,10 +10,9 @@ const { StatusCodes } = require('http-status-codes');
 
 const register = async (req, res) => {
     const { name, email, password } = req.body;
+    const emailAlreadyExists = await User.findOne({email});
 
-    const emailAlreadyExists = await User.find({email});
-
-    if(!emailAlreadyExists){
+    if(emailAlreadyExists){
         throw new BadRequestError("The email that you have provided has already been registered, please use a different one");
     }
 
@@ -26,18 +26,10 @@ const register = async (req, res) => {
     }
 
     const userToken = {userName: name, userEmail: email, userPassword: password};
+    attachCookiesToResponse(res, userToken);
 
-    const token = createJWT({payload: userToken});
-
-    const oneDay = 1000 * 60 * 60 * 24;//1millisecond x 60sec x 60min x 24 hr
-
-    res.cookie('token', token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + oneDay)
-    });
-    
-    res.status(StatusCodes.CREATED).json({user, token});
-}
+    res.status(StatusCodes.CREATED).json({userToken, token: req.signedCookies});
+};
 
 const login = async (req, res) => {
     const {email, password} = req.body;
@@ -49,7 +41,7 @@ const login = async (req, res) => {
     const user = await User.findOne({email});
 
     if(!user){
-        throw new NotFoundError("The email that you have provide is not registered with us");
+        throw new NotFoundError("The email that you have provided is not registered with us");
     }
 
     const passwordIsCorrect = user.comparePasswords(password);
@@ -58,14 +50,19 @@ const login = async (req, res) => {
         throw new UnauthorizedError("Password is incorrect");
     }
 
-    const token = user.createJWT();
+    const userToken = {userName: user.name, userEmail: email, userPassword: password};
+    attachCookiesToResponse(res, userToken);
 
-    res.status(StatusCodes.OK).json({user, token});
-}
+    res.status(StatusCodes.OK).json({userToken});
+};
 
 const logout = async (req, res) => {
-    res.json("logged out");
-}
+    res.cookie('token', 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now())
+    });
+    res.status(StatusCodes.OK).json("logged out");
+};
 
 module.exports = {
     register,
