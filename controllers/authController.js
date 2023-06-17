@@ -25,11 +25,13 @@ const register = async (req, res) => {
         throw new BadRequestError("Please provide a valid username/email/password");
     }
 
-    const token = user.createJWT();
+    const userToken = {userName: name, userEmail: email, userPassword: password};
+
+    const token = createJWT({payload: userToken});
 
     const oneDay = 1000 * 60 * 60 * 24;//1millisecond x 60sec x 60min x 24 hr
 
-    req.cookie('token', token, {
+    res.cookie('token', token, {
         httpOnly: true,
         expires: new Date(Date.now() + oneDay)
     });
@@ -53,7 +55,7 @@ const login = async (req, res) => {
     const passwordIsCorrect = user.comparePasswords(password);
 
     if(!passwordIsCorrect){
-        // throw new UnauthorizedError("Password is incorrect");
+        throw new UnauthorizedError("Password is incorrect");
     }
 
     const token = user.createJWT();
