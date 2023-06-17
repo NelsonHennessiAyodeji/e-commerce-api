@@ -21,7 +21,7 @@ const UserSchema = mongoose.Schema({
         required: [true, "Please provide a password"],
         minLength: 6
     },
-    userRole: {
+    role: {
         type: String,
         enum: ['user', 'admin'],
         default: 'user'
@@ -33,13 +33,13 @@ UserSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
-UserSchema.methods.createJWT = async function () {
+UserSchema.methods.createJWT = function () {
     return jwt.sign(
         {
             userName: this.name,
             userEmail: this.email,
             userPassword: this.password,
-            userRole: this.userRole
+            userRole: this.role
         },
         process.env.JWT_SECRET,
         {
