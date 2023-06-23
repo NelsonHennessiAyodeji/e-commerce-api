@@ -4,7 +4,7 @@ const {
     BadRequestError,
     NotFoundError,
     NotAcceptableError,
-    UnauthorizedError
+    UnauthenticatedError
 } = require('../error');
 const { StatusCodes } = require('http-status-codes');
 
@@ -25,10 +25,15 @@ const register = async (req, res) => {
         throw new BadRequestError("Please provide a valid username/email/password");
     }
 
-    const userToken = {userName: name, userEmail: email, userPassword: password};
+    const userToken = {userName: name, userEmail: email, userId: user._id, userRole: role};
     attachCookiesToResponse(res, userToken);
 
-    res.status(StatusCodes.CREATED).json({userToken, token: req.signedCookies});
+    res.status(StatusCodes.CREATED).json({
+        user: {
+            userName: userToken.userName,
+            userEmail: userToken.userEmail
+        }
+    });
 };
 
 const login = async (req, res) => {
@@ -44,16 +49,20 @@ const login = async (req, res) => {
         throw new NotFoundError("The email that you have provided is not registered with us");
     }
 
-    const passwordIsCorrect = user.comparePasswords(password);
+    const passwordIsCorrect = await user.comparePasswords(password);
+
 
     if(!passwordIsCorrect){
-        throw new UnauthorizedError("Password is incorrect");
+        throw new UnauthenticatedError("Password is incorrect");
     }
 
-    const userToken = {userName: user.name, userEmail: email, userPassword: password};
+    const userToken = {userName: user.name, userEmail: email, userId: user._id, userRole: user.role};
     attachCookiesToResponse(res, userToken);
 
-    res.status(StatusCodes.OK).json({userToken});
+    res.status(StatusCodes.OK).json({
+        userName: userToken.userName,
+        userEmail: userToken.userEmail
+    });
 };
 
 const logout = async (req, res) => {

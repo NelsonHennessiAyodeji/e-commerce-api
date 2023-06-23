@@ -1,7 +1,7 @@
 const { createJWT } = require("./jwt")
 
-const attachCookiesToResponse = (res, user) => {
-    const token = createJWT({payload: user});
+const attachCookiesToResponse = (res, userToken) => {
+    const token = createJWT({payload: userToken});
     
     const oneDay = 1000 * 60 * 60 * 24;//1millisecond x 60sec x 60min x 24 hr
 

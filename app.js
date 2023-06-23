@@ -25,7 +25,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 
 //Invoking Routers
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/users', userRouter);
 
 //Pseudo Home Route
 app.get('/', (req, res) => {
