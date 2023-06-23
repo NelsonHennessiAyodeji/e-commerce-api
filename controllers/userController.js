@@ -2,6 +2,7 @@ const User = require('../model/User');
 const { NotFoundError, BadRequestError, NotAcceptableError } = require('../error');
 const { StatusCodes } = require('http-status-codes');
 const { attachCookiesToResponse } = require('../utilities');
+const searchPermissions = require('../utilities/searchPermissions');
 
 const getAllUsers = async (req, res) => {
     const users = await User.find({role: 'user'}).select('-password');
@@ -19,6 +20,8 @@ const getSingleUser = async (req, res) => {
     if(!user){
         throw new BadRequestError("The id that you have provided does not exists");
     }
+
+    searchPermissions(req.user, user._id);
 
     res.status(StatusCodes.OK).json(user);
 };
@@ -54,15 +57,15 @@ const updateUserPassword = async (req, res) => {
     const isPasswordCorrect = await user.comparePasswords(oldPassword);
     
     if(!isPasswordCorrect){
-        throw new BadRequestError("Your password is incorrect");
+        throw new BadRequestError("Your old password is incorrect");
     }
     
     if(oldPassword === newPassword){
-        throw new BadRequestError("Your passwords match");
+        throw new BadRequestError("Your old and new password are matching");
     }
 
-    //TODO: Use the  .save to save the password
-    // await User.findOneAndUpdate({_id: userId}, {password: newPassword});
+    user.password = newPassword;
+    await user.save();
 
     res.status(StatusCodes.OK).json("Your password was successfully changed");
 };
