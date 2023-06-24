@@ -20,10 +20,15 @@ const deleteProduct = async (req, res) => {
     res.status(StatusCodes.OK).json("All product");
 };
 
+const uploadImage = async (req, res) => {
+    res.status(StatusCodes.OK).json("Uploaded an image");
+};
+
 module.exports = {
     getAllProducts,
     getSingleProducts,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    uploadImage
 };
