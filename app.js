@@ -15,6 +15,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 const productRouter = require('./routers/productRouter');
+const reviewRouter = require('./routers/reviewRouter');
 
 //Middleware Import
 const notFound = require('./middleware/not-found');
@@ -28,6 +29,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 //Pseudo Home Route
 app.get('/', (req, res) => {
