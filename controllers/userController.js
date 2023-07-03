@@ -2,7 +2,6 @@ const User = require("../model/User");
 const {
   NotFoundError,
   BadRequestError,
-  NotAcceptableError,
 } = require("../error");
 const { StatusCodes } = require("http-status-codes");
 const { attachCookiesToResponse } = require("../utilities");
