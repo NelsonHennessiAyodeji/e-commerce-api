@@ -32,25 +32,21 @@ const ReviewSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+//note to self: This is not the only one, find out why
 ReviewSchema.index({ product: 1, user: 1 }, { unique: true }); //makes only one review by one user
 
-ReviewSchema.statics.calculateAvgRating = async function (productId) {
+ReviewSchema.statics.calculateAverageRating = async function (productId) {
   const result = await this.aggregate([
-    {
-      $match: {
-        product: productId
-      }
-    },
+    { $match: { product: productId } },
     {
       $group: {
         _id: null,
-        averageRating: {
-          $avg: "$rating"
-        },
+        averageRating: { $avg: "$rating" },
         numOfReviews: { $sum: 1 }
       }
     }
   ]);
+
   try {
     await this.model("Product").findOneAndUpdate(
       { _id: productId },
@@ -60,16 +56,20 @@ ReviewSchema.statics.calculateAvgRating = async function (productId) {
       }
     );
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
-ReviewSchema.pre("save", async function () {
-  await this.constructor.calculateAvgRating(this.product);
+ReviewSchema.post("save", async function () {
+  await this.constructor.calculateAverageRating(this.product);
 });
 
-ReviewSchema.pre("remove", async function () {
-  await this.constructor.calculateAvgRating(this.product);
-});
+ReviewSchema.post(
+  "deleteOne",
+  { document: true, query: false },
+  async function () {
+    await this.constructor.calculateAverageRating(this.product);
+  }
+);
 
 module.exports = mongoose.model("Review", ReviewSchema);

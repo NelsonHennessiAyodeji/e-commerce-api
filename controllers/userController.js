@@ -1,8 +1,5 @@
 const User = require("../model/User");
-const {
-  NotFoundError,
-  BadRequestError,
-} = require("../error");
+const { NotFoundError, BadRequestError } = require("../error");
 const { StatusCodes } = require("http-status-codes");
 const { attachCookiesToResponse } = require("../utilities");
 const searchPermissions = require("../utilities/searchPermissions");
@@ -50,7 +47,7 @@ const updateUser = async (req, res) => {
     userName: name,
     userEmail: email,
     userId: user._id,
-    userRole: user.role,
+    userRole: user.role
   };
 
   attachCookiesToResponse(res, userToken);
@@ -89,5 +86,5 @@ module.exports = {
   getSingleUser,
   showCurrentUser,
   updateUser,
-  updateUserPassword,
+  updateUserPassword
 };

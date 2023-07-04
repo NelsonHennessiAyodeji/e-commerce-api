@@ -66,8 +66,7 @@ const deleteProduct = async (req, res) => {
     throw new NotFoundError(`Could not find product with id: ${productId}`);
   }
 
-  await product.deleteOne();
-  await Review.deleteMany({ _id: productId });
+  await product.deleteOne({ _id: productId });
 
   res.status(StatusCodes.OK).json({
     mag: "Deleted a product",

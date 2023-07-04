@@ -1,7 +1,11 @@
 const Review = require("../model/Review");
 const Product = require("../model/Product");
 const searchPermissions = require("../utilities/searchPermissions");
-const { NotFoundError, BadRequestError } = require("../error");
+const {
+  NotFoundError,
+  BadRequestError,
+  NotAcceptableError
+} = require("../error");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllReviews = async (req, res) => {
@@ -28,14 +32,26 @@ const getSingleReview = async (req, res) => {
 
 const createReview = async (req, res) => {
   const { product: productId } = req.body;
-  req.body.user = req.user.userId;
+  const { userId } = req.user;
 
-  const productExists = Product.find({ _id: productId });
+  const productExists = await Product.find({ _id: productId });
   if (!productExists) {
     throw new NotFoundError("The product doesnt exists");
   }
 
-  const review = await Review.create({ ...req.body });
+  //Although there is a code in the Review schema that allows me to do this, but nothing spoil sha
+  const alreadySubmitted = await Review.findOne({
+    product: productId,
+    user: userId
+  });
+
+  if (alreadySubmitted) {
+    throw new NotAcceptableError(
+      "You have already submitted a review, please try to edit your review if needed"
+    );
+  }
+
+  const review = await Review.create({ ...req.body, user: userId });
 
   if (!review) {
     throw new BadRequestError(
@@ -69,6 +85,7 @@ const deleteReview = async (req, res) => {
     throw new NotFoundError(`There is no review with id of ${reviewId}`);
   }
 
+  //remove( is deprecated)
   await review.deleteOne();
   res.status(StatusCodes.OK).json({ msg: "Deleted Review", review });
 };

@@ -16,6 +16,7 @@ const authRouter = require("./routers/authRouter");
 const userRouter = require("./routers/userRouter");
 const productRouter = require("./routers/productRouter");
 const reviewRouter = require("./routers/reviewRouter");
+const orderRouter = require("./routers/orderRouter");
 
 //Middleware Import
 const notFound = require("./middleware/not-found");
@@ -30,6 +31,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/orders", orderRouter);
 
 //Pseudo Home Route
 app.get("/", (req, res) => {
