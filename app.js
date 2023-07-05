@@ -11,6 +11,11 @@ const cors = require("cors");
 const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
 
+//Swagger
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 //Database connection Import
 const db = require("./database/connectDB");
 
@@ -52,8 +57,12 @@ app.use("/orders", orderRouter);
 
 //Pseudo Home Route
 app.get("/", (req, res) => {
-  res.send({ home: "E-Commerce API Home page", cookie: req.signedCookies });
+  res.send(
+    '<h1>Backend E-Commerce API</h1><a href="api-docs">Documentation</a>'
+  );
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Error Handler Middleware
 app.use(notFound);

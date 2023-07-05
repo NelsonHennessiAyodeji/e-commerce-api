@@ -1,0 +1,777 @@
+openapi: 3.0.0
+info:
+  title: E-commerce-API
+  description: ''
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://backend-e-commerce-api.onrender.com/
+  variables: {}
+paths:
+  /orders:
+    get:
+      tags:
+      - Order
+      summary: Get All Orders
+      description: ''
+      operationId: GetAllOrders
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /orders/6496dbe48e369e69526b3439:
+    get:
+      tags:
+      - Order
+      summary: Get Single Order
+      description: ''
+      operationId: GetSingleOrder
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /orders/showAllMyOrders:
+    get:
+      tags:
+      - Order
+      summary: Get Current Order
+      description: ''
+      operationId: GetCurrentOrder
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /orders/64a48914939147ed3a285587:
+    put:
+      tags:
+      - Order
+      summary: Update Order
+      description: ''
+      operationId: UpdateOrder
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateOrderRequest'
+              - example:
+                  paymentIntentId: someRandomValue
+            example:
+              paymentIntentId: someRandomValue
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /reviews:
+    post:
+      tags:
+      - Reviews
+      summary: Create Review
+      description: ''
+      operationId: CreateReview
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreateReviewRequest'
+              - example:
+                  rating: 3
+                  title: okay
+                  comment: this product is okay
+                  product: 6496dbe48e369e69526b3439
+            example:
+              rating: 3
+              title: okay
+              comment: this product is okay
+              product: 6496dbe48e369e69526b3439
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+    get:
+      tags:
+      - Reviews
+      summary: Get All Reviews
+      description: ''
+      operationId: GetAllReviews
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/xml
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /reviews/6496dbe48e369e69526b3439/reviews:
+    get:
+      tags:
+      - Reviews
+      summary: Get Single Product Reviews
+      description: ''
+      operationId: GetSingleProductReviews
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/xml
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /reviews/123:
+    put:
+      tags:
+      - Reviews
+      summary: Update Review
+      description: ''
+      operationId: UpdateReview
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateReviewRequest'
+              - example:
+                  rating: 1.5
+                  title: Bad Product
+                  comment: Very very shitty cake
+            example:
+              rating: 1.5
+              title: Bad Product
+              comment: Very very shitty cake
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /reviews/6496d6c0c41557adab176e0b:
+    delete:
+      tags:
+      - Reviews
+      summary: Delete Review
+      description: ''
+      operationId: DeleteReview
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          enum:
+          - application/json
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /products/123:
+    put:
+      tags:
+      - Product
+      summary: Update Product
+      description: ''
+      operationId: UpdateProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateProductRequest'
+              - example:
+                  name: Toy
+            example:
+              name: Toy
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /products/6496d6c0c41557adab176e0b:
+    delete:
+      tags:
+      - Product
+      summary: Delete Product
+      description: ''
+      operationId: DeleteProduct
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          enum:
+          - application/json
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /products/6496dbe48e369e69526b3439:
+    get:
+      tags:
+      - Product
+      summary: Get Single Products
+      description: ''
+      operationId: GetSingleProducts
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: multipart/form-data
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /products:
+    get:
+      tags:
+      - Product
+      summary: Get All Products
+      description: ''
+      operationId: GetAllProducts
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: multipart/form-data
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+    post:
+      tags:
+      - Product
+      summary: Create Product
+      description: ''
+      operationId: CreateProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreateProductRequest'
+              - example:
+                  name: armchair
+                  price: 12599
+                  image: https://dl.airtable.com/.attachmentThumbnails/530c07c5ade5acd9934c8dd334458b86/cf91397f
+                  colors:
+                  - '#000'
+                  - '#00ff00'
+                  - '#0000ff'
+                  company: marcos
+                  description: Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+                  category: bedroom
+                  user: 648ece107410e10eadbc0b79
+            example:
+              name: armchair
+              price: 12599
+              image: https://dl.airtable.com/.attachmentThumbnails/530c07c5ade5acd9934c8dd334458b86/cf91397f
+              colors:
+              - '#000'
+              - '#00ff00'
+              - '#0000ff'
+              company: marcos
+              description: Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+              category: bedroom
+              user: 648ece107410e10eadbc0b79
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /users/updateUserPassword:
+    put:
+      tags:
+      - User
+      summary: Update User Password
+      description: ''
+      operationId: UpdateUserPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateUserPasswordRequest'
+              - example:
+                  oldPassword: secret
+                  newPassword: handyman
+            example:
+              oldPassword: secret
+              newPassword: handyman
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /users/updateUser:
+    put:
+      tags:
+      - User
+      summary: Update User
+      description: ''
+      operationId: UpdateUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateUserRequest'
+              - example:
+                  name: newJohn
+                  email: newjohn@gmail.com
+            example:
+              name: newJohn
+              email: newjohn@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /users/648ece077410e10eadbc0b75:
+    get:
+      tags:
+      - User
+      summary: Get Single User
+      description: ''
+      operationId: GetSingleUser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /users:
+    get:
+      tags:
+      - User
+      summary: Get All Users
+      description: ''
+      operationId: GetAllUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /auth/logout:
+    get:
+      tags:
+      - Auth
+      summary: Logout
+      description: ''
+      operationId: Logout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      description: ''
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  name: John
+                  email: john@gmail.com
+                  password: secret
+            example:
+              name: John
+              email: john@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      description: ''
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterRequest'
+              - example:
+                  name: Mike
+                  email: mike@gmail.com
+                  password: secret
+            example:
+              name: Mike
+              email: mike@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /users/showMe:
+    get:
+      summary: Show Current User
+      description: ''
+      operationId: ShowCurrentUser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+components:
+  schemas:
+    UpdateOrderRequest:
+      title: UpdateOrderRequest
+      required:
+      - paymentIntentId
+      type: object
+      properties:
+        paymentIntentId:
+          type: string
+      example:
+        paymentIntentId: someRandomValue
+    CreateReviewRequest:
+      title: CreateReviewRequest
+      required:
+      - rating
+      - title
+      - comment
+      - product
+      type: object
+      properties:
+        rating:
+          type: integer
+          format: int32
+        title:
+          type: string
+        comment:
+          type: string
+        product:
+          type: string
+      example:
+        rating: 3
+        title: okay
+        comment: this product is okay
+        product: 6496dbe48e369e69526b3439
+    UpdateReviewRequest:
+      title: UpdateReviewRequest
+      required:
+      - rating
+      - title
+      - comment
+      type: object
+      properties:
+        rating:
+          type: number
+        title:
+          type: string
+        comment:
+          type: string
+      example:
+        rating: 1.5
+        title: Bad Product
+        comment: Very very shitty cake
+    DeleteReviewRequest:
+      title: DeleteReviewRequest
+      required:
+      - rating
+      - title
+      - comment
+      type: object
+      properties:
+        rating:
+          type: number
+        title:
+          type: string
+        comment:
+          type: string
+      example:
+        rating: 1.5
+        title: Bad Product
+        comment: Very very shitty cake
+    UpdateProductRequest:
+      title: UpdateProductRequest
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Toy
+    DeleteProductRequest:
+      title: DeleteProductRequest
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Toy
+    CreateProductRequest:
+      title: CreateProductRequest
+      required:
+      - name
+      - price
+      - image
+      - colors
+      - company
+      - description
+      - category
+      - user
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+          format: int32
+        image:
+          type: string
+        colors:
+          type: array
+          items:
+            type: string
+          description: ''
+        company:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        user:
+          type: string
+      example:
+        name: armchair
+        price: 12599
+        image: https://dl.airtable.com/.attachmentThumbnails/530c07c5ade5acd9934c8dd334458b86/cf91397f
+        colors:
+        - '#000'
+        - '#00ff00'
+        - '#0000ff'
+        company: marcos
+        description: Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+        category: bedroom
+        user: 648ece107410e10eadbc0b79
+    UpdateUserPasswordRequest:
+      title: UpdateUserPasswordRequest
+      required:
+      - oldPassword
+      - newPassword
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      example:
+        oldPassword: secret
+        newPassword: handyman
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      required:
+      - name
+      - email
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      example:
+        name: newJohn
+        email: newjohn@gmail.com
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: John
+        email: john@gmail.com
+        password: secret
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Mike
+        email: mike@gmail.com
+        password: secret
+tags:
+- name: Order
+  description: ''
+- name: Reviews
+  description: ''
+- name: Product
+  description: ''
+- name: User
+  description: ''
+- name: Auth
+  description: ''
