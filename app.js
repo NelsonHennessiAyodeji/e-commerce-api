@@ -35,7 +35,7 @@ app.use("/api/v1/orders", orderRouter);
 
 //Pseudo Home Route
 app.get("/", (req, res) => {
-  res.send({ home: "E-Commerce API", cookie: req.signedCookies });
+  res.send({ home: "E-Commerce API Home page", cookie: req.signedCookies });
 });
 
 //Error Handler Middleware
